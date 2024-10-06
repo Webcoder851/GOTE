@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<style>
+    body{
+        background-color: black;
+        /* background-color: rgb(208, 248, 144); */
+    }
+    .box{
+        margin-left: 43%;
+        margin-top: 15%;
+    }
+    .login-container {
+        margin-top: -300px;
+    width: 300px;
+    margin: 100px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 90;
+    position: relative;
+}
+
+.login-container h1 {
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #218838;
+}
+</style>
+<body>
+    <div class="box">
+        <image src="LOGO-modified.png" height="250px" width="250px"></image>
+    </div>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <a href="disclaimer.html"><button type="submit">Login</button></a>
+            <p>or</p>
+            <a href="register.html"><button type="submit">Register</button></a>
+        </form>
+    </div>
+
+</body>
+<script>
+    gsap.to(".box",{
+        opacity:0,
+        duration:1.5,
+        delay:2
+    })
+    gsap.from(".login-container",{
+        opacity:0,
+        duration:1.5,
+        delay:2
+    })
+    gsap.to("body",{
+        backgroundColor:"rgb(208, 248, 144)",
+        duration:1.5,
+        delay:3
+    })
+</script>
+<!-- <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    // Simple validation
+    if (username === "user" && password === "password") {
+        alert("Login successful!");
+        window.location.href = "avatar.html";
+    } else {
+        alert("Incorrect username or password!");
+    }
+});
+</script> -->
+</html>

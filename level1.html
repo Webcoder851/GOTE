@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>level 2 : iDENTIFY DEVICES</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        @font-face {
+           font-family: "AbrilFatface-Regular";
+           src: url("AbrilFatface-Regular.ttf");
+        }
+        body{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-image: url("recycleBack.avif");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .Task{
+            height: 200px;
+            width: 40%;
+            text-align: center;
+            margin-left: 30%;
+            background-color: #a7f2b8;
+            font-size: 20px;
+            margin-top: 40px;
+            border: 2px solid rgb(69, 105, 54);
+            box-shadow: 3px 3px 10px rgb(97, 96, 96);
+            color: rgb(22, 69, 2);
+        }
+        .rules{
+            margin-left: 46%;
+            margin-top: 30px;
+            height: 30px;
+            width: 100px;
+            font-size: 16px;
+            border-color: #a7f2b8;
+            color: #a7f2b8;
+            background-color: rgb(69, 105, 54);
+        }
+        #Rules{
+            height: 100px;
+            width: 80%;
+            border-color: #a7f2b8;
+            color: #a7f2b8;
+            background-color: rgb(69, 105, 54);;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-left: 10%;
+            box-shadow: 3px 3px 10px rgb(97, 96, 96);
+            display: none;
+        }
+        .scan{
+            text-align: center;
+            margin-left: 4%;
+
+        }
+        video { 
+            width: 100%; max-width: 500px; 
+        }
+        .scan-results {
+             margin-top: 20px; 
+        }
+        @media (max-width: 600px) {
+        video {
+          width: 100%; /* Full screen width on mobile */
+         }
+        .scan-results {
+            font-size: 14px; /* Adjust font size for smaller screens */
+            float: right;
+            margin-right: 80%;
+            margin-top: -50px;
+            font-size: 30px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="Task">
+        <h1 style="margin-top: 20px;">Task : </h1>
+
+        <p style="margin-left: 30px;margin-top: 30px;font-weight: bold;">ENERGY CONSERVATION </p>
+        <p style="margin-left: 30px;margin-top: 5px;margin-bottom: 40px;">You have to scan your surrounding and identify which device consumes energy.</p>
+    </div>
+    <button class="rules" onclick="f()">RULES</button>
+    <div id="Rules">
+        <p>1. Tap 'Access' to your camera so that you can easily scan the objects (your privacy is safe under it!)</p>
+        <p>2. If you find PLASTIC you get 10 Points , GLASS get 15 Points , PAPER / CARDBOARD get 5 points , METAL get 2 points </p>
+    </div>
+    <div class="scan">
+    <h1 style="color: #05621b;">Scan Your Room for Energy Consuming Devices</h1>
+    <video id="cameraFeed" autoplay></video>
+    </div>
+    <div class="scan-results">
+        <h2 style="font-size: 30px;color: #05621b;">Detected Items</h2>
+        <ul style="font-size: 25px;" id="itemList"></ul>
+    </div>
+    <div id="pointsDisplay">Points: 0</div>
+
+    <script>
+        // Access the camera
+        const videoElement = document.getElementById('cameraFeed');
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                videoElement.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Camera access denied', error);
+            });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    <script>
+        // Load the COCO-SSD model for object detection
+        let model;
+        cocoSsd.load().then((loadedModel) => {
+            model = loadedModel;
+        });
+    
+        // Perform detection on each video frame
+        videoElement.addEventListener('loadeddata', () => {
+            setInterval(() => {
+                if (model) {
+                    model.detect(videoElement).then(predictions => {
+                        displayPredictions(predictions);
+                    });
+                }
+            }, 1000); // Run detection every 1 second
+        });
+    
+        // Display identified objects
+        function displayPredictions(predictions) {
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = ''; // Clear previous results
+    
+            predictions.forEach(prediction => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${prediction.class} - ${Math.round(prediction.score * 100)}%`;
+                itemList.appendChild(listItem);
+    
+                // Check if the detected item is recyclable (this could be enhanced with a database)
+                if (isRecyclable(prediction.class)) {
+                    listItem.style.color = 'green'; // Highlight recyclable items
+                }
+            });
+        }
+    
+        // Dummy function to check if an item is recyclable
+        function isRecyclable(itemClass) {
+            const recyclableItems = ['bottle', 'can', 'cardboard', 'paper', 'plastic', 'glass'];
+            return recyclableItems.includes(itemClass);
+        }
+    </script>
+    --------------------------------------------------------------------------------------------------
+    <script src="level.js" ></script>
+</body>
+<script>
+    document.getElementById("Rules").className="hide" ;
+    function f(){
+        $("#Rules").slideToggle();
+   }
+</script>
+<script>
+  let totalPoints = 0; // Initialize points
+
+// Define a mapping of recyclable items to points
+const pointsMapping = {
+    'bottle': 10,
+    'glass': 15,
+    'paper': 5,
+    'cardboard': 5,
+    'metal': 20
+};
+
+// Function to award points based on the detected item
+function awardPoints(itemDescription) {
+    // Log the item description to the console for debugging
+    console.log(`Item detected: ${itemDescription}`);
+
+    // Iterate through the recyclable items and check if the detected item matches any
+    Object.keys(pointsMapping).forEach((key) => {
+        if (itemDescription.toLowerCase().includes(key)) {
+            // Award the corresponding points
+            totalPoints += pointsMapping[key];
+            console.log(`Awarded ${pointsMapping[key]} points for ${key}. Total Points: ${totalPoints}`);
+            displayPoints();  // Update the points display
+        }
+    });
+}
+
+// Function to update the points display on the UI
+function displayPoints() {
+    // Find the element that shows points and update its text
+    document.getElementById('pointsDisplay').textContent = `Points: ${totalPoints}`;
+}
+
+// Function to check if the item is recyclable
+function isRecyclable(itemDescription) {
+    const recyclableItems = ['bottle', 'glass', 'paper', 'cardboard', 'metal'];  // Define the recyclable items
+    return recyclableItems.some(item => itemDescription.toLowerCase().includes(item));
+}
+
+// Display detected items and award points if recyclable
+function displayDetectedItems(data) {
+    const itemList = document.getElementById('itemList');
+    itemList.innerHTML = '';  // Clear previous detected items
+
+    const labels = data.responses[0].labelAnnotations;  // Extract detected items
+    labels.forEach(label => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${label.description} - Confidence: ${Math.round(label.score * 100)}%`;
+        itemList.appendChild(listItem);
+
+        // Check if the item is recyclable and award points
+        if (isRecyclable(label.description)) {
+            listItem.style.color = 'green';  // Highlight recyclable items
+            awardPoints(label.description);  // Award points
+        }
+    });
+}
+  
+
+
+
+</script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Selection</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-image: url("BattleGround.avif");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+        background-attachment: fixed;
+        }
+        .avatar-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-left: 120px;
+        }
+        .avatar {
+            margin-left: 30px;
+            margin-top: 30px;
+            width: 200px;
+            height: 200px;
+            border: 2px solid transparent; 
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .AvatarBox{
+            margin-left: 35%;
+            margin-top: 4%;
+        }
+        .avatar.selected {
+            border-color: green;
+        }
+        .preview {
+            margin-top: 100px;
+            margin-left: 46%;
+        }
+        #avatarPreview{
+           height: 200px;
+           width: 200px;
+           margin-left: -50px;
+        }
+        .preview img {
+            max-width: 200px;
+        }
+        .confirm-btn {
+            display: block; 
+            margin-top: 20px;
+            margin-left: 44.5%;
+            height: 30px;
+            width: 150px;
+            background-color: green;
+            color: white;
+            font-size: 20px;
+            box-shadow: 3px 3px 10px rgb(171, 239, 171);
+        }
+    </style>
+</head>
+<body>
+    <div class="AvatarBox">
+       <h1>Select your Avatar Guardians</h1>
+    </div>
+       <div class="avatar-gallery">
+        <img src="avatar1.webp" alt="Avatar 1" class="avatar" onclick="selectAvatar(this)">
+        <img src="avatar2.jpg" alt="Avatar 2" class="avatar" onclick="selectAvatar(this)">
+        <img src="avatar3.webp" alt="Avatar 3" class="avatar" onclick="selectAvatar(this)">
+        <img src="avatar4.webp" alt="Avatar 4" class="avatar" onclick="selectAvatar(this)">
+        <img src="Avatar5.png" alt="Avatar 5" class="avatar" onclick="selectAvatar(this)">
+        <!-- <img src="avatar6.png" alt="Avatar 6" class="avatar" onclick="selectAvatar(this)"> -->
+       </div>
+    <div class="preview">
+        <h2 style="color: white;">Preview</h2>
+        <img id="avatarPreview" src="preview.png" alt="No avatar selected">
+    </div>
+    <a href="loginStart.html"><button class="confirm-btn" onclick="confirmAvatar()">Confirm Avatar</button></a>
+
+    <script>
+        function selectAvatar(imgElement) {
+            // Remove 'selected' class from all avatars
+            document.querySelectorAll('.avatar').forEach(avatar => avatar.classList.remove('selected'));
+            // Add 'selected' class to the clicked avatar
+            imgElement.classList.add('selected');
+            // Update preview image
+            document.getElementById('avatarPreview').src = imgElement.src;
+        }
+
+        function confirmAvatar() {
+            const selectedAvatar = document.querySelector('.avatar.selected');
+            if (selectedAvatar) {
+                alert('Avatar confirmed: ' + selectedAvatar.alt);
+                
+            } else {
+                alert('Please select an avatar first.');
+            }
+        }
+    </script>
+</body>
+</html>

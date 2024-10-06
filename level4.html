@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waste Management System</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+     body{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-image: url("level4Back.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+        }
+        .Task{
+            height: 200px;
+            width: 40%;
+            text-align: center;
+            margin-left: 30%;
+            background-color: #a7f2b8;
+            font-size: 20px;
+            margin-top: 40px;
+            border: 2px solid rgb(69, 105, 54);
+            box-shadow: 3px 3px 10px rgb(97, 96, 96);
+            color: rgb(22, 69, 2);
+        }
+        .rules{
+            margin-top: 30px;
+            height: 30px;
+            width: 100px;
+            font-size: 16px;
+            border-color: #a7f2b8;
+            color: #a7f2b8;
+            background-color: rgb(69, 105, 54);
+        }
+        #Rules{
+            height: 30px;
+            width: 80%;
+            border-color: #a7f2b8;
+            color: #a7f2b8;
+            background-color: rgb(69, 105, 54);;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-left: 10%;
+            box-shadow: 3px 3px 10px rgb(97, 96, 96);
+            display: none;
+        }
+    h1 {
+      margin-bottom: 20px;
+    }
+    #waste{
+        height: 100px;
+        width: 100px;
+    }
+    .dustbin {
+      width: 150px;
+      height: 200px;
+      border: 2px dashed #00796b;
+      display: inline-block;
+      margin: 20px;
+      position: relative;
+      background-color: #ffffff;
+    }
+    .dustbin img {
+      width: 100%;
+      height: auto;
+    }
+    .draggable {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      cursor: pointer;
+      border: 2px solid #00796b;
+      display: inline-block;
+    }
+    #images {
+      margin-bottom: 30px;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+    <div class="Task">
+        <h1 style="margin-top: 20px;">Task : </h1>
+
+        <p style="margin-top: 30px;font-weight: bold;">Waste Management </p>
+        <p style="margin-top: 30px;">You have to differentiate the domestic wastes into respective types.</p>
+    </div>
+    <button class="rules" onclick="f()">RULES</button>
+    <div id="Rules">
+        <p> You have to complete this task by dragging different waste into different dustbins shown below.</p>
+    
+    </div>
+  <h1 style="color: rgb(21, 68, 9);">Waste Management System</h1>
+  <div id="images">
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="sabji"><img src="waste1.jpg" alt="sabji" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="fruit"><img src="waste2.jpg" alt="fruit" id="waste"  /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="charger"><img src="waste3.jpg" alt="Metal" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="vegetable"><img src="waste4.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="glass"><img src="waste5.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="bulb"><img src="waste6.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="headphone"><img src="waste7.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="phone"><img src="waste8.jpg" alt="Organic Waste" id="waste"/></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="mirror"><img src="waste9.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="wrapper"><img src="waste10.jpg" alt="Organic Waste" id="waste"/></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="polythene"><img src="waste11.jpg" alt="Organic Waste" id="waste" /></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="bottle"><img src="waste12.jpg" alt="Organic Waste" id="waste"/></div>
+    <div class="draggable" draggable="true" ondragstart="drag(event)" id="bowl"><img src="waste13.jpg" alt="Organic Waste" id="waste"/></div>
+  </div>
+
+  <div class="dustbin" ondragover="allowDrop(event)" ondrop="drop(event, 'Organic')">
+    
+    <img src="dustbin1.jpg" alt="Organic" />
+    <h3>ORGANIC WASTE</h3>
+  </div>
+  
+  <div class="dustbin" ondragover="allowDrop(event)" ondrop="drop(event, 'Glass')">
+    <img src="dustbin2.jpg" alt="Glass" />
+    <h3>GLASS WASTE</h3>
+  </div>
+  <div class="dustbin" ondragover="allowDrop(event)" ondrop="drop(event, 'E-Waste')">
+    <img src="dustbin3.jpg" alt="E-Waste" />
+    <h3>E-WASTE</h3>
+  </div>
+  <div class="dustbin" ondragover="allowDrop(event)" ondrop="drop(event, 'Plastic')">
+    <img src="dustbin4.jpg" alt="Plastic" />
+    <h3>PLASTIC WASTE</h3>
+  </div>
+  
+  <div class="message" id="message"></div>
+
+  <script>
+     document.getElementById("Rules").className="hide" ;
+    function f(){
+        $("#Rules").slideToggle();
+   }
+    // Dragging function
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+
+    // Allow drop function
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    // Drop function
+    function drop(event, binType) {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("text");
+      const draggedElement = document.getElementById(data);
+      const correctWasteTypes = {
+        'Organic': ['sabji', 'fruit','vegetable'],
+        'Glass': ['glass','bulb','mirror'],
+        'E-Waste': ['charger','headphone','phone'],
+        'Plastic': ['wrapper','polythene','bottle','bowl']
+      };
+
+      // Check if the dropped item is correct
+      if (correctWasteTypes[binType].includes(data)) {
+        event.target.appendChild(draggedElement);
+        document.getElementById('message').innerText = "Correct! " + draggedElement.alt + " is in the right bin.";
+      } else {
+        document.getElementById('message').innerText = "Wrong bin! " + draggedElement.alt + " doesn't belong here.";
+      }
+    }
+  </script>
+
+</body>
+</html>
